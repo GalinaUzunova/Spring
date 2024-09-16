@@ -44,38 +44,36 @@ public class UserServiceImpl implements UserService {
         if (user == null || loginDto.getPassword() == null) {
             return false;
         }
-      //  boolean sucsses = encoder.matches(loginDto.getPassword(), user.getPassword());
+        //  boolean sucsses = encoder.matches(loginDto.getPassword(), user.getPassword());
 
-     //    if (sucsses) {
-
-
-
-       currentuser.setFullName(user.getFullName());
-       currentuser.isLoggIn();
-       boolean sucsses=true;
+        //    if (sucsses) {
 
 
-      //   } else {
-    //          currentuser.clean();
-    //    }
-        return true;
+        currentuser.setFullName(user.getFullName());
+        currentuser.isLoggIn();
+        boolean sucsses = true;
+
+
+        //   } else {
+        //          currentuser.clean();
+        //    }
+        return false;
     }
 
 
-        public void logout () {
-            currentuser.clean();
-        }
-
-        public UserProfileDto getProfile () {
-
-        User loggedUser=this.userRepository.findByUserName(currentuser.getFullName());
-        if(loggedUser==null){
-            throw  new RuntimeException("no usre");
-        }
-
-
-            return this.mapper.map(loggedUser, UserProfileDto.class);
-        }
+    public void logout() {
+        currentuser.clean();
     }
+
+    public UserProfileDto getProfile() {
+
+        User loggedUser = this.userRepository.findByUserName(currentuser.getFullName());
+
+
+
+       return this.mapper.map(loggedUser,UserProfileDto.class);
+
+    }
+}
 
 
