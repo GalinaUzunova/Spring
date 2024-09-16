@@ -94,12 +94,10 @@ public class UserController {
 
     @GetMapping("/users/profile")
 
-    public String gerProfile( Model model) {
+    public String getProfile( Model model) {
 
         if (!model.containsAttribute("profileDate")) {
             model.addAttribute("profileDate", userService.getProfile());
-
-
 
         }
         return "profile";

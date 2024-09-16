@@ -1,7 +1,6 @@
 package org.pathfinder2.servises;
 
 import org.modelmapper.ModelMapper;
-import org.pathfinder2.configuration.CurrentUserSession;
 import org.pathfinder2.model.LoginDto;
 import org.pathfinder2.model.User;
 import org.pathfinder2.model.UserProfileDto;
@@ -45,16 +44,20 @@ public class UserServiceImpl implements UserService {
         if (user == null || loginDto.getPassword() == null) {
             return false;
         }
-        boolean sucsses = encoder.matches(loginDto.getPassword(), user.getPassword());
+      //  boolean sucsses = encoder.matches(loginDto.getPassword(), user.getPassword());
 
-         if (sucsses) {
-
-       currentuser.setUser(user);
+     //    if (sucsses) {
 
 
-         } else {
-              currentuser.clean();
-        }
+
+       currentuser.setFullName(user.getFullName());
+       currentuser.isLoggIn();
+       boolean sucsses=true;
+
+
+      //   } else {
+    //          currentuser.clean();
+    //    }
         return true;
     }
 
@@ -65,8 +68,13 @@ public class UserServiceImpl implements UserService {
 
         public UserProfileDto getProfile () {
 
+        User loggedUser=this.userRepository.findByUserName(currentuser.getFullName());
+        if(loggedUser==null){
+            throw  new RuntimeException("no usre");
+        }
 
-            return this.mapper.map(currentuser.getUser().getFullName(), UserProfileDto.class);
+
+            return this.mapper.map(loggedUser, UserProfileDto.class);
         }
     }
 
